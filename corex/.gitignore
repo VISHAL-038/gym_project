@@ -1,0 +1,16 @@
+# Virtual environment (outside corex, so we’ll ignore the parent directory reference)
+../venv/
+
+# SQLite database
+db.sqlite3
+
+# Static files (collected for production)
+staticfiles/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE files
+.vscode/
+.idea/

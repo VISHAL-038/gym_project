@@ -1,0 +1,11 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.btn-primary {
+    background-color: #1a3c6d; /* Dark blue from the images */
+    border-color: #1a3c6d;
+}
+.btn-primary:hover {
+    background-color: #0f2557;
+    border-color: #0f2557;
+}
