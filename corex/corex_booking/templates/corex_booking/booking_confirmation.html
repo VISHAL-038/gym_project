@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 booking-page">
+    <h2 class="text-center mb-4">Booking Confirmed!</h2>
+    <div class="card">
+        <div class="card-body text-center">
+            <h5 class="card-title">{{ booking.time_slot.service.name }}</h5>
+            <p class="card-text"><strong>Date:</strong> {{ booking.time_slot.date }}</p>
+            <p class="card-text"><strong>Time:</strong> {{ booking.time_slot.start_time }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ booking.status }}</p>
+            <a href="{% url 'service_list' %}" class="btn btn-primary mt-3">Book Another Service</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

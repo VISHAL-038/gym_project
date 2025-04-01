@@ -17,12 +17,20 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
+from .views import home
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('explore/', TemplateView.as_view(template_name='home.html'), name='explore'),  # Placeholder
-    path('cart/', TemplateView.as_view(template_name='home.html'), name='cart'),  # Placeholder
-    path('diet/', TemplateView.as_view(template_name='home.html'), name='diet'),  # Placeholder
+    path('', home, name='home'),
+    path('explore/', home, name='explore'),  # Placeholder
+    path('cart/', home, name='cart'),  # Placeholder
+    path('diet/', home, name='diet'),  # Placeholder
+    path('user/', include('corex_user.urls')),
+    path('booking/', include('corex_booking.urls')),
 ]
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center login-page" style="height: 100vh; background: linear-gradient(180deg, #1a3c6d 0%, #0f2557 100%);">
+    <div class="text-center mb-4">
+        <h1 class="text-white">CORE X</h1>
+    </div>
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Password</label>
+                {{ form.password }}
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <div class="form-check">
+                    {{ form.remember_me }}
+                    <label class="form-check-label" for="id_remember_me">Remember me</label>
+                </div>
+                <a href="#" class="text-primary">Forgot password</a>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Continue</button>
+        </form>
+        <div class="text-center mt-3 social-buttons">
+            <p>Or login with</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="btn btn-outline-dark rounded-circle"><i class="bi bi-apple"></i></a>
+                <a href="#" class="btn btn-outline-danger rounded-circle"><i class="bi bi-google"></i></a>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <p>Don't have an account? <a href="{% url 'register_step1' %}" class="text-primary">Sign Up</a></p>
+        </div>
+    </div>
+</div>
+<!-- Include Bootstrap Icons for social login buttons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %}

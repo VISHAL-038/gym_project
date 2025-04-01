@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3 booking-page">
+    <h2 class="text-center mb-4">Wellness Services</h2>
+    <div class="row">
+        {% for service in services %}
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card service-card">
+                {% if service.image_url %}
+                <img src="{{ service.image_url }}" class="card-img-top" alt="{{ service.name }}" onerror="this.src='{% static 'images/default_service.jpg' %}'">
+                {% else %}
+                <img src="{% static 'images/default_service.jpg' %}" class="card-img-top" alt="Default Service">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ service.name }}</h5>
+                    <p class="card-text text-muted">{{ service.description }}</p>
+                    <p class="card-text"><strong>Price:</strong> ₹ {{ service.price }}</p>
+                    <p class="card-text"><strong>Duration:</strong> {{ service.duration }} minutes</p>
+                    <a href="{% url 'book_service' service.id %}" class="btn btn-primary w-100">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No services available at the moment.</p>
+        {% endfor %}
+      
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+{% endblock %}

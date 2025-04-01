@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3 booking-page">
+    <h2 class="text-center mb-4">Book {{ service.name }}</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="post" id="booking-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+                <!-- Hidden service field -->
+                <input type="hidden" name="service" value="{{ service.id }}">
+                <div class="mb-3">
+                    <label for="id_date" class="form-label">Select Date</label>
+                    {{ form.date }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_time_slot" class="form-label">Select Time Slot</label>
+                    {{ form.time_slot }}
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Book Now</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const dateInput = document.getElementById('id_date');
+    const timeSlotSelect = document.getElementById('id_time_slot');
+    const serviceId = {{ service.id }};
+
+    // Function to fetch and update time slots
+    function updateTimeSlots(date) {
+        timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+        if (date) {
+            fetch(`{% url 'get_time_slots' %}?service_id=${serviceId}&date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    const timeSlots = data.time_slots;
+                    timeSlots.forEach(slot => {
+                        const option = document.createElement('option');
+                        option.value = slot.id;
+                        option.textContent = slot.start_time;
+                        timeSlotSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching time slots:', error);
+                    timeSlotSelect.innerHTML = '<option value="">Error loading time slots</option>';
+                });
+        }
+    }
+
+    // Update time slots when the date changes
+    dateInput.addEventListener('change', function() {
+        updateTimeSlots(this.value);
+    });
+
+    // Pre-populate time slots if there's a selected date (e.g., after form validation error)
+    {% if selected_date %}
+    dateInput.value = '{{ selected_date }}';
+    updateTimeSlots('{{ selected_date }}');
+    {% endif %}
+</script>
+{% endblock %}
