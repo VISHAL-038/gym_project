@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3 workout-page">
+    <h2 class="text-center mb-5">{{ workout_plan.name }}</h2>
+    <p class="text-muted mb-4">{{ workout_plan.description }}</p>
+    <div class="text-end mb-3">
+        <a href="{% url 'exercise_create' workout_plan.id %}" class="btn btn-primary">Add Exercise</a>
+    </div>
+    {% if workout_plan.exercises.all %}
+    <div class="row">
+        {% for exercise in workout_plan.exercises.all %}
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card exercise-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ exercise.name }}</h5>
+                    <p class="card-text">
+                        <strong>Sets:</strong> {{ exercise.sets }}<br>
+                        <strong>Reps:</strong> {{ exercise.reps }}<br>
+                        {% if exercise.duration %}
+                        <strong>Duration:</strong> {{ exercise.duration }} minutes<br>
+                        {% endif %}
+                        <strong>Description:</strong> {{ exercise.description|truncatewords:20 }}
+                    </p>
+                    <div class="text-end">
+                        <a href="{% url 'schedule_create' exercise.id %}" class="btn btn-outline-primary btn-sm">Schedule</a>
+                    </div>
+                    {% if exercise.schedules.all %}
+                    <h6 class="mt-3">Schedule:</h6>
+                    <ul>
+                        {% for schedule in exercise.schedules.all %}
+                        <li>{{ schedule.day_of_week }} at {{ schedule.start_time }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center">No exercises added yet. Add an exercise to get started!</p>
+    {% endif %}
+</div>
+{% endblock %}

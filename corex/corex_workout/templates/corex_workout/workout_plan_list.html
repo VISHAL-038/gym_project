@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3 workout-page">
+    <h2 class="text-center mb-5">My Workout Plans</h2>
+    <div class="text-end mb-3">
+        <a href="{% url 'workout_plan_create' %}" class="btn btn-primary">Create New Plan</a>
+    </div>
+    {% if workout_plans %}
+    <div class="row">
+        {% for plan in workout_plans %}
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card workout-plan-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ plan.name }}</h5>
+                    <p class="card-text text-muted">{{ plan.description|truncatewords:20 }}</p>
+                    <a href="{% url 'workout_plan_detail' plan.id %}" class="btn btn-outline-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center">You have no workout plans yet. Create one to get started!</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -29,6 +29,7 @@ urlpatterns = [
     path('diet/', home, name='diet'),  # Placeholder
     path('user/', include('corex_user.urls')),
     path('booking/', include('corex_booking.urls')),
+    path('workout/', include('corex_workout.urls')),
 ]
 
 # Serve media files during development
