@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Diet Tracking</h2>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search meals..." name="q" value="{{ query }}">
+        <button class="btn btn-outline-secondary" type="submit" form="search-form">Search</button>
+    </div>
+    <form id="search-form" method="get" action="{% url 'diet_tracking' %}">
+        <select name="category" class="form-select mb-3" onchange="this.form.submit()">
+            <option value="all" {% if category == 'all' %}selected{% endif %}>All</option>
+            <option value="fat_loss" {% if category == 'fat_loss' %}selected{% endif %}>Fat Loss</option>
+            <option value="bulk" {% if category == 'bulk' %}selected{% endif %}>Bulk</option>
+            <option value="vegan" {% if category == 'vegan' %}selected{% endif %}>Vegan</option>
+        </select>
+    </form>
+    <form method="post" enctype="multipart/form-data" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control" name="name" placeholder="Meal Name" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" class="form-control" name="preparation_time" placeholder="Prep Time (mins)" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" class="form-control" name="calories" placeholder="Calories" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" step="0.01" class="form-control" name="price" placeholder="Price" required>
+        </div>
+        <div class="mb-3">
+            <select name="dietary_category" class="form-select" required>
+                <option value="all">All</option>
+                <option value="fat_loss">Fat Loss</option>
+                <option value="bulk">Bulk</option>
+                <option value="vegan">Vegan</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input type="file" class="form-control" name="image" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Meal</button>
+    </form>
+    <div class="row">
+        {% for meal in meals %}
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+                <img src="{% if meal.image %}{{ meal.image.url }}{% else %}{% static 'images/default_meal.jpeg' %}{% endif %}" class="card-img-top" alt="{{ meal.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ meal.name }}</h5>
+                    <p class="card-text">
+                        Prep Time: {{ meal.preparation_time }} mins<br>
+                        Calories: {{ meal.calories }} kcal<br>
+                        Price: ${{ meal.price }}<br>
+                        {% if meal.nutritionalinfo %}
+                        Protein: {{ meal.nutritionalinfo.protein }}g<br>
+                        Carbs: {{ meal.nutritionalinfo.carbs }}g<br>
+                        Fat: {{ meal.nutritionalinfo.fat }}g
+                        {% endif %}
+                    </p>
+                    <button class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No meals found.</p>
+        {% endfor %}
+        <br>
+        <br>
+        <br>
+    </div>
+   
+</div>
+{% endblock %}

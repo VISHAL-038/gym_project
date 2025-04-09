@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Today’s Diet Chart - {{ today|date:"F d, Y" }}</h2>
+    <div class="row">
+        {% for meal in meals %}
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+                <img src="{% if meal.image %}{{ meal.image.url }}{% else %}{% static 'images/default_meal.jpeg' %}{% endif %}" class="card-img-top" alt="{{ meal.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ meal.name }}</h5>
+                    <p class="card-text">
+                        Prep Time: {{ meal.preparation_time }} mins<br>
+                        Calories: {{ meal.calories }} kcal<br>
+                        {% if meal.nutritionalinfo %}
+                        Protein: {{ meal.nutritionalinfo.protein }}g<br>
+                        Carbs: {{ meal.nutritionalinfo.carbs }}g<br>
+                        Fat: {{ meal.nutritionalinfo.fat }}g
+                        {% endif %}
+                    </p>
+                    <span class="badge bg-success">{% if meal.dietary_category == 'vegan' %}Vegan{% else %}{{ meal.dietary_category|title }}{% endif %}</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No meals planned for today. Add some below!</p>
+        {% endfor %}
+    </div>
+    <a href="{% url 'diet_tracking' %}" class="btn btn-primary mt-3">Add Meals</a>
+</div>
+{% endblock %}
