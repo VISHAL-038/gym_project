@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('explore/', home, name='explore'),  # Placeholder
-    path('cart/', home, name='cart'),  # Placeholder
+    path('cart/', include('corex_order.urls')),  # Placeholder
     path('diet/', include('corex_diet.urls')),
     path('user/', include('corex_user.urls')),
     path('booking/', include('corex_booking.urls')),

@@ -60,17 +60,13 @@
                         Fat: {{ meal.nutritionalinfo.fat }}g
                         {% endif %}
                     </p>
-                    <button class="btn btn-primary">Add</button>
+                    <a href="{% url 'add_to_cart' meal.id %}" class="btn btn-success">Add to Cart</a>
                 </div>
             </div>
         </div>
         {% empty %}
         <p class="text-center">No meals found.</p>
         {% endfor %}
-        <br>
-        <br>
-        <br>
     </div>
-   
 </div>
 {% endblock %}
