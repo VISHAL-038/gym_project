@@ -4,6 +4,11 @@
 {% block content %}
 <div class="container mt-3 workout-page">
     <h2 class="text-center mb-5">{{ workout_plan.name }}</h2>
+    {% if workout_plan.image %}
+    <img src="{{ workout_plan.image.url }}" alt="{{ workout_plan.name }} Image" class="mb-4 img-fluid rounded" style="max-width: 100%; height: auto; object-fit: cover;">
+    {% else %}
+    <img src="{% static 'images/workout_placeholder.jpg' %}" alt="Placeholder" class="mb-4 img-fluid rounded" style="max-width: 100%; height: auto; object-fit: cover;">
+    {% endif %}
     <p class="text-muted mb-4">{{ workout_plan.description }}</p>
     <div class="text-end mb-3">
         <a href="{% url 'exercise_create' workout_plan.id %}" class="btn btn-primary">Add Exercise</a>
@@ -23,6 +28,14 @@
                         {% endif %}
                         <strong>Description:</strong> {{ exercise.description|truncatewords:20 }}
                     </p>
+                    {% if exercise.video %}
+                    <video controls class="mt-2 mb-3" style="max-width: 100%; border-radius: 8px;">
+                        <source src="{{ exercise.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% else %}
+                    <p class="text-muted">No video available.</p>
+                    {% endif %}
                     <div class="text-end">
                         <a href="{% url 'schedule_create' exercise.id %}" class="btn btn-outline-primary btn-sm">Schedule</a>
                     </div>

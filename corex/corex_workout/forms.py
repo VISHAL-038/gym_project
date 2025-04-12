@@ -4,7 +4,7 @@ from .models import WorkoutPlan, Exercise, Schedule
 class WorkoutPlanForm(forms.ModelForm):
     class Meta:
         model = WorkoutPlan
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'image']  # Updated to include 'image' instead of 'video' and 'photo'
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3}),
         }
@@ -12,7 +12,7 @@ class WorkoutPlanForm(forms.ModelForm):
 class ExerciseForm(forms.ModelForm):
     class Meta:
         model = Exercise
-        fields = ['name', 'sets', 'reps', 'duration', 'description']
+        fields = ['name', 'sets', 'reps', 'duration', 'description', 'video']  # Updated to include 'video'
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3}),
         }

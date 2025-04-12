@@ -9,6 +9,7 @@ class WorkoutPlan(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='workouts/images/', blank=True, null=True)  # Workout plan image
 
     def __str__(self):
         return f"{self.name} - {self.user.username}"
@@ -20,6 +21,7 @@ class Exercise(models.Model):
     reps = models.IntegerField(default=10)
     duration = models.IntegerField(blank=True, null=True)  # Duration in minutes (optional)
     description = models.TextField(blank=True, null=True)
+    video = models.FileField(upload_to='workouts/videos/', blank=True, null=True)  # Exercise video
 
     def __str__(self):
         return f"{self.name} - {self.workout_plan.name}"

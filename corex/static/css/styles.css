@@ -98,17 +98,53 @@ p {
     background-color: #dc3545;
     color: #fff;
 }
-.fixed-bottom {
-    z-index: 1000;
-}
-.fixed-bottom a {
-    text-decoration: none;
+.nav-label {
+    font-family: 'Roboto', sans-serif;
     font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
 }
-.fixed-bottom i {
-    display: block;
+.navbar-nav {
+    flex-grow: 1;
+    justify-content: space-around;
 }
-
+.navbar-nav .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.25rem 0;
+    transition: color 0.3s ease;
+}
+.navbar-nav .nav-link:hover {
+    color: #007bff !important;
+}
+.navbar-nav .nav-link .badge {
+    top: -5px;
+    right: -5px;
+}
+@media (max-width: 576px) {
+    .navbar-nav {
+        min-width: 300px;
+    }
+    .navbar-nav .nav-link {
+        min-width: 60px;
+    }
+}
+.modal-content {
+    border-radius: 15px;
+}
+.form-label {
+    font-weight: 500;
+}
+.profile-pic {
+    border: 2px solid #e0e0e0;
+}
+.stat-box {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 /* Cards */
 .card {
     border: none;

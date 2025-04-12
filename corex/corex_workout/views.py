@@ -11,7 +11,7 @@ def workout_plan_list(request):
 @login_required
 def workout_plan_create(request):
     if request.method == 'POST':
-        form = WorkoutPlanForm(request.POST)
+        form = WorkoutPlanForm(request.POST, request.FILES)
         if form.is_valid():
             workout_plan = form.save(commit=False)
             workout_plan.user = request.user
@@ -30,7 +30,7 @@ def workout_plan_detail(request, plan_id):
 def exercise_create(request, plan_id):
     workout_plan = get_object_or_404(WorkoutPlan, id=plan_id, user=request.user)
     if request.method == 'POST':
-        form = ExerciseForm(request.POST)
+        form = ExerciseForm(request.POST, request.FILES)
         if form.is_valid():
             exercise = form.save(commit=False)
             exercise.workout_plan = workout_plan
