@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from .models import WellnessService, TimeSlot, Booking
 
 
+
 def service_list(request):
     services = WellnessService.objects.all()
     return render(request, 'corex_booking/service_list.html', {'services': services})

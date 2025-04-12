@@ -1,20 +1,20 @@
 /* Global Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #fff; /* White background for all pages */
+    background-color: #fff;
     color: #333;
 }
 
 .container, .container-fluid {
-    padding-top: 0; /* Keep top padding at 0 */
-    padding-left: 8px; /* Reduce left padding from 12px to 8px */
-    padding-right: 8px; /* Reduce right padding from 12px to 8px */
-    padding-bottom: 20px; /* Reduce bottom padding from 80px to 60px */
+    padding-top: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    color: #333; /* Darker color for headings */
+    color: #333;
 }
 
 p {
@@ -23,7 +23,7 @@ p {
 
 /* Buttons */
 .btn-primary {
-    background-color: #1a3c6d; /* Dark blue */
+    background-color: #1a3c6d;
     border-color: #1a3c6d;
     border-radius: 25px;
     padding: 12px 20px;
@@ -38,112 +38,125 @@ p {
 }
 
 /* Navigation Bar */
-.navbar {
+/* Inline styles for navbar (to be moved to styles.css later) */
+.navbar-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
     border-top: 1px solid #e0e0e0;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    padding: 5px 0; /* Reduce navbar padding to make it slimmer */
+    padding: 5px 0;
+    z-index: 1000;
 }
-
-.navbar .nav-link {
-    color: #666;
-    font-size: 12px;
+.nav-item {
+    flex: 1;
     text-align: center;
-    padding: 5px 8px; /* Adjust padding for nav links */
 }
-
-.navbar .nav-link svg {
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    margin: 0 auto;
+    background-color: #666;
+    color: #fff;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    text-decoration: none;
+    padding: 0;
+}
+.nav-link.active {
+    background-color: #1a3c6d;
+    color: #fff;
+}
+.nav-link i {
+    font-size: 24px;
+    margin-bottom: 2px;
+}
+.nav-label {
+    display: none;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    position: absolute;
+    bottom: -25px;
+    background-color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+.nav-link:hover .nav-label,
+.nav-link.active .nav-label {
     display: block;
-    margin: 0 auto 3px;
-    fill: #666;
 }
-
-.navbar .nav-link:hover {
-    color: #1a3c6d;
-}
-
-.navbar .nav-link:hover svg {
-    fill: #1a3c6d;
+@media (max-width: 576px) {
+    .nav-link {
+        width: 50px;
+        height: 50px;
+    }
+    .nav-link i {
+        font-size: 20px;
+    }
 }
 
 /* home page */
+/* ... (existing styles) ... */
+
+.btn-group .btn {
+    border-radius: 25px;
+    padding: 8px 16px;
+    margin-right: 5px;
+    background-color: #fff;
+    border-color: #1a3c6d;
+    color: #1a3c6d;
+}
+
+.btn-group .btn.active {
+    background-color: #1a3c6d;
+    color: #fff;
+    border-color: #1a3c6d;
+}
+
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.progress-circle {
+    position: relative;
+    display: inline-block;
+}
+
 .progress-circle svg {
     transform: rotate(-90deg);
     width: 100%;
     height: 100%;
 }
+
 .progress-circle text {
     font-family: 'Roboto', sans-serif;
-    font-size: 6px;
+    font-size: 8px;
 }
-.card {
-    border: none;
-    border-radius: 15px;
-    background: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: #fff;
-}
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
-.btn-outline-danger {
-    color: #dc3545;
-    border-color: #dc3545;
-}
-.btn-outline-danger:hover {
-    background-color: #dc3545;
-    color: #fff;
-}
-.nav-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
-}
-.navbar-nav {
-    flex-grow: 1;
-    justify-content: space-around;
-}
-.navbar-nav .nav-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.25rem 0;
-    transition: color 0.3s ease;
-}
-.navbar-nav .nav-link:hover {
-    color: #007bff !important;
-}
-.navbar-nav .nav-link .badge {
-    top: -5px;
-    right: -5px;
-}
+
 @media (max-width: 576px) {
-    .navbar-nav {
-        min-width: 300px;
+    .card img {
+        width: 100px;
+        height: 100px;
     }
-    .navbar-nav .nav-link {
-        min-width: 60px;
+    .btn-group .btn {
+        padding: 6px 12px;
+        font-size: 14px;
     }
-}
-.modal-content {
-    border-radius: 15px;
-}
-.form-label {
-    font-weight: 500;
-}
-.profile-pic {
-    border: 2px solid #e0e0e0;
-}
-.stat-box {
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 /* Cards */
 .card {
@@ -214,7 +227,7 @@ a.text-primary:hover {
 
 /* Registration Pages */
 .register-page {
-    max-width: 400px; /* Match mobile width */
+    max-width: 400px;
     margin: 0 auto;
 }
 
@@ -229,8 +242,8 @@ a.text-primary:hover {
 }
 
 .register-page .goal-options .form-check {
-    background-color: #f5f5f5; /* Light gray background */
-    border: 2px solid #1a3c6d; /* Blue border */
+    background-color: #f5f5f5;
+    border: 2px solid #1a3c6d;
     border-radius: 15px;
     padding: 15px 20px;
     margin-bottom: 10px;
@@ -307,6 +320,8 @@ a.text-primary:hover {
 }
 
 /* Wellness Services Page */
+/* ... (existing styles) ... */
+
 .booking-page h2 {
     font-size: 2.5rem;
     font-weight: 700;
@@ -319,7 +334,7 @@ a.text-primary:hover {
 .booking-page .service-card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 15px;
+    border-radius: 20px;
     overflow: hidden;
 }
 
@@ -340,17 +355,22 @@ a.text-primary:hover {
     bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     transition: background 0.3s ease;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .booking-page .service-card:hover .image-overlay {
+    opacity: 1;
     background: rgba(0, 0, 0, 0.7);
 }
 
 .booking-page .service-card .service-name {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     background: rgba(255, 255, 255, 0.1);
     padding: 0.5rem 1rem;
@@ -364,56 +384,74 @@ a.text-primary:hover {
 }
 
 .booking-page .service-card .card-img-top {
-    height: 300px;
+    height: 250px;
     object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .booking-page .service-card .card-body {
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    padding: 2rem;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.booking-page .service-card .card-text.text-muted {
+.booking-page .service-card .service-details {
+    flex-grow: 1;
+    margin-right: 1rem;
+}
+
+.booking-page .service-card .card-text {
     color: #555;
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
+    font-size: 1rem;
+    margin-bottom: 0;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 .booking-page .service-card .card-text strong {
-    font-size: 1.2rem;
+    color: #333;
 }
 
 .booking-page .service-card .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    padding: 0.75rem;
-    font-size: 1.1rem;
+    background-color: #1a3c6d;
+    border-color: #1a3c6d;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
+    border-radius: 25px;
+    white-space: nowrap;
 }
 
 .booking-page .service-card .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: #0f2557;
+    border-color: #0f2557;
 }
 
-.booking-page .col-10:not(:last-child) .service-card {
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 2rem;
-}
-
-/* Adjust card width on smaller screens */
 @media (max-width: 576px) {
-    .booking-page .col-10 {
-        width: 100%; /* Full width on small screens */
+    .booking-page .service-card .card-img-top {
+        /* height: 200px; */
+        width: auto;
     }
     .booking-page .service-card .service-name {
-        font-size: 1.5rem; /* Smaller font size for the service name */
+        font-size: 1.5rem;
         padding: 0.4rem 0.8rem;
     }
-    .booking-page .service-card .card-img-top {
-        height: 250px; /* Slightly smaller image height on small screens */
+    .booking-page .service-card .card-body {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    .booking-page .service-card .service-details {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    .booking-page .service-card .btn-primary {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
     }
 }
 
@@ -502,4 +540,3 @@ a.text-primary:hover {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
-
