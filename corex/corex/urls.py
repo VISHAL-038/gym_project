@@ -20,10 +20,13 @@ from django.urls import path, include
 from .views import home
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import home, profile, update_progress
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('profile/', profile, name='profile'),
+    path('update_progress/', update_progress, name='update_progress'),
     path('explore/', home, name='explore'),  # Placeholder
     path('cart/', include('corex_order.urls')),  # Placeholder
     path('diet/', include('corex_diet.urls')),
