@@ -1,11 +1,111 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center">Welcome to CoreX</h1>
-    <p class="text-center text-muted">Your fitness and wellness journey starts here!</p>
-    <div class="text-center mt-4">
-        <a href="{% url 'profile' %}" class="btn btn-primary">View Your Profile</a>
+<div class="container mt-4 pt-3">
+    <!-- Greeting -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold text-dark">Hello, {{ user.get_full_name|default:user.username }}</h2>
+        <div class="d-flex align-items-center">
+            <span class="me-2 text-muted"><i class="bi bi-bell"></i></span>
+            <img src="{% static 'images/profile_placeholder.jpg' %}" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+        </div>
+    </div>
+
+    <!-- Workout Section -->
+    <div class="card mb-3 shadow-sm rounded-3 overflow-hidden">
+        <div class="card-body p-3">
+            <h5 class="card-title text-muted mb-2">Today's Workout</h5>
+            <div class="d-flex align-items-center">
+                {% if workout %}
+                <img src="{% static 'images/workout_placeholder.jpg' %}" alt="Workout" class="rounded me-3" style="width: 100px; height: 100px; object-fit: cover;">
+                <div>
+                    <h6 class="mb-1 text-dark">{{ workout.name|default:"No Workout" }}</h6>
+                    <p class="text-muted mb-0">{{ workout_duration|default:"No duration" }} {% if workout.description %}• {{ workout.description }}{% endif %}</p>
+                </div>
+                {% else %}
+                <p class="text-muted">No workout planned today.</p>
+                {% endif %}
+                <a href="#" class="btn btn-outline-danger btn-sm ms-auto rounded-pill">Strength</a>
+                <a href="{% url 'workout_plan_list' %}" class="btn btn-primary btn-sm ms-2 rounded-circle" style="width: 30px; height: 30px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-up-right" style="font-size: 12px;"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Progress Section -->
+    <div class="card mb-3 shadow-sm rounded-3">
+        <div class="card-body p-3">
+            <h5 class="card-title text-muted mb-2">Daily Progress</h5>
+            <div class="row g-0">
+                <div class="col-6">
+                    <div class="progress-circle text-center" style="position: relative; width: 100px; height: 100px; margin: 0 auto;">
+                        <svg viewBox="0 0 36 36">
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                  fill="none" stroke="#e0e0e0" stroke-width="3" />
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                                  fill="none" stroke="#007bff" stroke-width="3"
+                                  stroke-dasharray="{{ progress.steps|default:0 }}, 100"
+                                  transform="rotate(-90 18 18)" />
+                            <text x="18" y="20" text-anchor="middle" font-size="6" fill="#333">{{ progress.steps|default:0 }}/10000</text>
+                        </svg>
+                        <p class="text-center mt-1 text-muted"><i class="bi bi-footprints"></i> Steps</p>
+                    </div>
+                </div>
+                <div class="col-6 d-flex flex-column justify-content-center">
+                    <p class="mb-1"><i class="bi bi-fire text-danger"></i> Calories: {{ progress.calories|default:0 }} Kcal</p>
+                    <p><i class="bi bi-geo-alt-fill text-success"></i> Distance: {{ progress.distance|default:0 }} Km</p>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <!-- Diet Chart Section -->
+    <div class="card mb-3 shadow-sm rounded-3">
+        <div class="card-body p-3">
+            <h5 class="card-title text-muted mb-2">Today's Diet Chart</h5>
+            <div class="d-flex align-items-center">
+                {% if meal_plan and meals %}
+                <img src="{% if meals.0.image %}{{ meals.0.image.url }}{% else %}{% static 'images/default_meal.jpg' %}{% endif %}" alt="Meal" class="rounded me-3" style="width: 100px; height: 100px; object-fit: cover;">
+                <div>
+                    <p class="mb-0 text-dark">{% for meal in meals|slice:":1" %}{{ meal.name }}{% endfor %}</p>
+                    <small class="text-muted">View All</small>
+                </div>
+                {% else %}
+                <p class="text-muted">No diet plan today.</p>
+                {% endif %}
+                <div class="ms-auto d-flex align-items-center">
+                    <span class="me-2 text-muted"><i class="bi bi-fork-knife"></i></span>
+                    <span class="badge bg-success rounded-circle" style="width: 10px; height: 10px;"></span>
+                    <span class="badge bg-danger rounded-circle ms-1" style="width: 10px; height: 10px;"></span>
+                </div>
+                <a href="{% url 'diet_home' %}" class="btn btn-primary btn-sm ms-2 rounded-circle" style="width: 30px; height: 30px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-up-right" style="font-size: 12px;"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Walk & Run Section -->
+    <div class="card mb-3 shadow-sm rounded-3">
+        <div class="card-body p-3">
+            <h5 class="card-title text-muted mb-2">Walk & Run</h5>
+            <p class="mb-2 text-dark">Total Distance: {{ progress.walk_run_distance|default:0 }} Km</p>
+            <a href="#" class="btn btn-primary btn-sm rounded-pill">Start Now <i class="bi bi-play-fill ms-1"></i></a>
+        </div>
     </div>
 </div>
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Simple progress circle animation
+    const progress = {{ progress.steps|default:0 }};
+    const radius = 15.9155;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (progress / 10000) * circumference;
+    document.querySelector('path:nth-child(2)').style.strokeDashoffset = offset;
+</script>
 {% endblock %}
